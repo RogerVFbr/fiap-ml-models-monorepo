@@ -1,13 +1,13 @@
-name: 'PR to DEV'
+name: 'Validate & Open PR to DEV'
 
 on:
   push:
     branches:
-      - 'feature/*'       # matches every branch containing a single '/'
+      - 'feature/*'
 
 jobs:
   terraform:
-    name: 'Open PR to DEV'
+    name: 'Validate & Open PR to DEV'
     runs-on: ubuntu-latest
 
     env:
