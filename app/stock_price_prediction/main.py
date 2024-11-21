@@ -6,7 +6,3 @@ if __name__ == "__main__":
     prediction.EPOCHS = ARGS.epochs
     prediction.OUTPUT_PATH = ARGS.output
     prediction.run()
-
-    # ARGS
-    # No of Epochs
-    # output path
