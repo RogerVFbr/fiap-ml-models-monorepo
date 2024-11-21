@@ -35,9 +35,12 @@ jobs:
         shell: bash
         run: python --version
 
-      - name: Show Tree
-        shell: bash
-        run: tree /
+      - name: Current Working Directory
+        run: pwd
+
+#      - name: Show Tree
+#        shell: bash
+#        run: tree /
 
       - name: Terraform Init
         run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
