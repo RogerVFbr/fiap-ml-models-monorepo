@@ -16,6 +16,7 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
       APPLICATON_NAME: fiap-ml-models-monorepo
       OUTPUT_DIR: output
+      MODELS_BUCKET_NAME: fiap-ml-models-monorepo-bucket
 
     defaults:
       run:
