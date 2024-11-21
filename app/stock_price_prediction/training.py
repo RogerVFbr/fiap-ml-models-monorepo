@@ -122,5 +122,9 @@ class StockPricePrediction:
         if not os.path.exists(self.OUTPUT_PATH):
             os.makedirs(self.OUTPUT_PATH)
 
-        torch.save(self.MODEL.state_dict(), path_with_datetime)
+        # torch.save(self.MODEL.state_dict(), path_with_datetime)
+
+        x = torch.FloatTensor(self.test_x)
+        traced_cell = torch.jit.trace(self.MODEL, x)
+        torch.jit.save(traced_cell, path_with_datetime)
         self.LOGGER.info(f"Model saved -> {path_with_datetime}")
