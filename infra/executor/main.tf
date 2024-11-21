@@ -1,7 +1,7 @@
 data "archive_file" "this" {
   type        = "zip"
   source_dir  = "../${var.app_dir}/${var.script_dir}"
-  output_path = "application_zip_for_hashing.zip"
+  output_path = "${var.script_dir}.zip"
 }
 
 resource "null_resource" "script_execution" {
@@ -12,7 +12,7 @@ resource "null_resource" "script_execution" {
   provisioner "local-exec" {
     command = <<EOF
       cd ../${var.app_dir}
-      python -m ${var.app_dir}.${var.entry_point} --epochs 20 --output "./${var.app_dir}/${var.output_dir}"
+      python -m ${var.app_dir}.${var.entry_point} --epochs ${var.epochs} --output "./${var.app_dir}/${var.output_dir}"
       EOF
   }
 }
