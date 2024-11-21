@@ -32,14 +32,12 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Echo Python Version
-        shell: bash
-        run: python --version
+      - name: Echo Python/AWS CLI Versions
+        run: | 
+          python --version
+          aws --version
 
-      - name: Current Working Directory
-        run: pwd
-
-      - name: Show Tree
+      - name: Echo App Contents
         run: tree ../app
 
       - name: Terraform Init

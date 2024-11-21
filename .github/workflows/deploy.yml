@@ -1,4 +1,4 @@
-name: 'Deploy'
+name: 'Deploy Infra & Models'
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   terraform:
-    name: 'Deploy Infra & App'
+    name: 'Deploy Infra & Models'
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     env:
@@ -32,18 +32,16 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Echo Python Version
+    - name: Echo Python/AWS CLI Versions
       shell: bash
-      run: python --version
+      run: | 
+        python --version
+        aws --version
 
-    - name: Current Working Directory
-      run: pwd
-
-    - name: Show Tree
+    - name: Echo App Contents
       run: tree ../app
 
     - name: Extract branch name
-      shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
 
