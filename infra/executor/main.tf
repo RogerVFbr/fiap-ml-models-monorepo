@@ -11,7 +11,7 @@ resource "null_resource" "script_execution" {
 
   provisioner "local-exec" {
     command = <<EOF
-      cd ../${var.app_dir}
+      cd ..
       python -m ${var.app_dir}.${var.entry_point} --epochs ${var.epochs} --output "./${var.app_dir}/${var.output_dir}"
       EOF
   }
