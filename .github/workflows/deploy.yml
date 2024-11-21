@@ -54,7 +54,9 @@ jobs:
       run: terraform plan -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR' -input=false
 
     - name: Install Python Packages
-      run: cd .. && pip install -r requirements.txt
+      run: | 
+        cd .. 
+        pip install -r requirements.txt
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -input=false -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR'
