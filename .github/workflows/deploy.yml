@@ -51,7 +51,7 @@ jobs:
       run: terraform init -backend-config="key=$APPLICATON_NAME-${{ steps.extract_branch.outputs.branch }}.tfstate"
 
     - name: Terraform Plan
-      run: terraform plan -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR' -input=false
+      run: terraform plan -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var "output_dir=$OUTPUT_DIR" -var "bucket_name=$MODELS_BUCKET_NAME" -input=false
 
     - name: Install Python Packages
       run: | 
@@ -59,7 +59,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR'
+      run: terraform apply -auto-approve -input=false -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var "output_dir=$OUTPUT_DIR" -var "bucket_name=$MODELS_BUCKET_NAME"
 
     - name: Create Pull Request to Main
       if: steps.extract_branch.outputs.branch == 'develop'

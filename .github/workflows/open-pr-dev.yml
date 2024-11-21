@@ -46,7 +46,7 @@ jobs:
         run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
 
       - name: Terraform Plan
-        run: terraform plan -var 'environment=develop' -var 'output_dir=$OUTPUT_DIR' -var "bucket_name=$MODELS_BUCKET_NAME" -input=false
+        run: terraform plan -var 'environment=develop' -var "output_dir=$OUTPUT_DIR" -var "bucket_name=$MODELS_BUCKET_NAME" -input=false
 
       - name: Create Pull Request to Develop
         uses: repo-sync/pull-request@v2
