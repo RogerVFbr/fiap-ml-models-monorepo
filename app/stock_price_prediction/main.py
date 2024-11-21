@@ -9,5 +9,4 @@ if __name__ == "__main__":
 
     # ARGS
     # No of Epochs
-    # file prefix
     # output path
