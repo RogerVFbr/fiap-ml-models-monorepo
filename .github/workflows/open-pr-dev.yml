@@ -41,6 +41,7 @@ jobs:
       - name: Show Tree
         run: tree
 
+
       - name: Terraform Init
         run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
 
