@@ -7,6 +7,7 @@ if __name__ == "__main__":
     prediction.OUTPUT_PATH = ARGS.output
     prediction.run()
 
+
     # ARGS
     # No of Epochs
     # file prefix
