@@ -116,16 +116,12 @@ class StockPricePrediction:
         self.LOGGER.info(f"Saving to '{self.OUTPUT_PATH}'")
 
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-
-        # Append datetime to the file name
-        # directory, base_filename = os.path.split(base_path)
         filename_with_datetime = f"{self.MODEL_NAME}-{current_datetime}.pth"
         path_with_datetime = os.path.join(self.OUTPUT_PATH, filename_with_datetime)
 
-        # Create the directory if it does not exist
         if not os.path.exists(self.OUTPUT_PATH):
             os.makedirs(self.OUTPUT_PATH)
 
         # Save the model
         torch.save(self.MODEL.state_dict(), path_with_datetime)
-        self.LOGGER.info(f"Model saved to {path_with_datetime}")
+        self.LOGGER.info(f"Model saved -> {path_with_datetime}")
