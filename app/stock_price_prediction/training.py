@@ -122,6 +122,5 @@ class StockPricePrediction:
         if not os.path.exists(self.OUTPUT_PATH):
             os.makedirs(self.OUTPUT_PATH)
 
-        # Save the model
         torch.save(self.MODEL.state_dict(), path_with_datetime)
         self.LOGGER.info(f"Model saved -> {path_with_datetime}")
