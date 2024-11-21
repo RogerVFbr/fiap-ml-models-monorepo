@@ -15,6 +15,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: us-east-1
       APPLICATON_NAME: fiap-ml-models-monorepo
+      OUTPUT_DIR: output
 
     defaults:
       run:
@@ -34,7 +35,7 @@ jobs:
         run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
 
       - name: Terraform Plan
-        run: terraform plan -var 'environment=develop' -input=false
+        run: terraform plan -var 'environment=develop' -var 'output_dir=$OUTPUT_DIR' -input=false
 
       - name: Create Pull Request to Develop
         uses: repo-sync/pull-request@v2
