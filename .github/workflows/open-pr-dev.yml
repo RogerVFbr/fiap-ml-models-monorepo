@@ -39,8 +39,7 @@ jobs:
         run: pwd
 
       - name: Show Tree
-        run: tree
-
+        run: tree ../app
 
       - name: Terraform Init
         run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
