@@ -63,8 +63,8 @@ jobs:
 
     - name: Upload Models
       run: | 
-        mkdir -p "./app/$OUTPUT_DIR"
-        aws s3 sync "./app/$OUTPUT_DIR" "s3://$MODELS_BUCKET_NAME-${{ steps.extract_branch.outputs.branch }}/models"
+        mkdir -p ./app/${OUTPUT_DIR}
+        aws s3 sync ./app/${OUTPUT_DIR} s3://${MODELS_BUCKET_NAME}-${{ steps.extract_branch.outputs.branch }}/models
 
     - name: Create Pull Request to Main
       if: steps.extract_branch.outputs.branch == 'develop'
