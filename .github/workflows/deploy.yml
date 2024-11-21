@@ -63,6 +63,7 @@ jobs:
 
     - name: Upload Models
       run: | 
+        mkdir -p ./app/$OUTPUT_DIR
         aws s3 sync ./app/$OUTPUT_DIR s3://$MODELS_BUCKET_NAME/models
 
     - name: Create Pull Request to Main
