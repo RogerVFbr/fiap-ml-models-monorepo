@@ -43,7 +43,7 @@ jobs:
       run: terraform plan -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR' -input=false
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -var 'environment=${{ steps.extract_branch.outputs.branch }} -var 'output_dir=$OUTPUT_DIR''
+      run: terraform apply -auto-approve -input=false -var 'environment=${{ steps.extract_branch.outputs.branch }}' -var 'output_dir=$OUTPUT_DIR'
 
     - name: Create Pull Request to Main
       if: steps.extract_branch.outputs.branch == 'develop'
