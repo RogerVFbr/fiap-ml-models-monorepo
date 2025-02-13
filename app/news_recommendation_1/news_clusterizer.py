@@ -1,13 +1,15 @@
 import numpy as np
+import polars as pl
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import TfidfVectorizer
-from app.news_recommendation import time_it
-import polars as pl
+from sklearn.metrics import davies_bouldin_score, calinski_harabasz_score
+from sklearn.metrics.pairwise import cosine_similarity
 
-from app.news_recommendation.data_repository import DataRepository
+from app.news_recommendation_1 import time_it
+from app.news_recommendation_1.data_repository import DataRepository
 
 
-class NewsClassifier:
+class NewsClusterizer:
 
     FORCE_REPROCESS = False
     NO_OF_CLUSTERS = 10
@@ -25,7 +27,10 @@ class NewsClassifier:
     @time_it
     def execute(self, news_data: pl.DataFrame):
         if self.data_repo.classified_news_parquet_exists() and not self.FORCE_REPROCESS:
-            return self.data_repo.load_classified_news_from_parquet()
+            news_data, similarity_matrix = self.data_repo.load_classified_news_from_parquet()
+            print(news_data.head(5))
+            print(similarity_matrix)
+            return news_data, similarity_matrix
 
         news_data = news_data.sort('modified', descending=True)
         centers, labels = self.build_cluster(news_data)
@@ -44,16 +49,42 @@ class NewsClassifier:
     def build_cluster(self, news_data: pl.DataFrame):
         matrix = self.vectorizer.fit_transform(news_data['soup_clean'])
 
-        kmeans = KMeans(
+        clusters = KMeans(
             n_clusters=self.NO_OF_CLUSTERS,
             max_iter=100,
             n_init=5,
             random_state=42
         )
 
-        kmeans.fit(matrix)
-        return kmeans.cluster_centers_, kmeans.labels_
+        # Inertia: 244831.9700560397
+        # Davies - Bouldin
+        # Index: 8.230525835457774
+        # Calinski - Harabasz
+        # Index: 886.1074400555872
 
+        clusters.fit(matrix)
+
+        # # Inertia
+        # print(f'Inertia: {clusters.inertia_}')
+        # # print("Measures the sum of squared distances of samples to their closest cluster center.")
+        # # print("Lower values indicate better clustering.")
+        # # print()
+        #
+        # # Convert sparse matrix to dense array
+        # dense_matrix = matrix.toarray()
+        #
+        # # Davies-Bouldin Index
+        # print(f'Davies-Bouldin Index: {davies_bouldin_score(dense_matrix, clusters.labels_)}')
+        # # print("Measures the average similarity ratio of each cluster with its most similar cluster.")
+        # # print("Lower values indicate better clustering.")
+        # # print()
+        #
+        # # Calinski-Harabasz Index
+        # print(f'Calinski-Harabasz Index: {calinski_harabasz_score(dense_matrix, clusters.labels_)}')
+        # # print("Measures the ratio of the sum of between-cluster dispersion and within-cluster dispersion.")
+        # # print("Higher values indicate better clustering.")
+
+        return clusters.cluster_centers_, clusters.labels_
 
     @time_it
     def build_cluster_similarity_matrix(self, centers):
