@@ -21,7 +21,7 @@ class DataService:
     @time_it
     def onboard(self):
         """
-        Loads, adjusts, filters, and sanitizes the datasets.
+        Loads, adjusts, filters, and sanitizes the datasets-origin-bkp.
 
         Returns
         -------
@@ -33,6 +33,9 @@ class DataService:
         >>> service = DataService()
         >>> train_data, test_data, news_data = service.onboard()
         """
+        if not self.data_repo.parquet_files_exist():
+            self.data_repo.download_parquet_files_from_s3()
+
         user_data_train, user_data_test, news_data = self.data_repo.load_dataset_from_parquet()
         user_data_train, user_data_test, news_data = self.adjust_datatypes(user_data_train, user_data_test, news_data)
         user_data_train, user_data_test, news_data = self.filter(user_data_train, user_data_test, news_data)
@@ -43,7 +46,7 @@ class DataService:
     @time_it
     def adjust_datatypes(self, user_data_train, user_data_test, news_data):
         """
-        Adjusts the data types of columns in the datasets.
+        Adjusts the data types of columns in the datasets-origin-bkp.
 
         Parameters
         ----------
@@ -139,7 +142,7 @@ class DataService:
     @time_it
     def filter(self, user_data_train, user_data_test, news_data):
         """
-        Filters the datasets to ensure data consistency.
+        Filters the datasets-origin-bkp to ensure data consistency.
 
         Parameters
         ----------
@@ -242,7 +245,7 @@ class DataService:
     @time_it
     def sanitize(self, user_data_train: pl.DataFrame, user_data_test: pl.DataFrame, news_data: pl.DataFrame):
         """
-        Sanitizes the datasets by removing unnecessary columns.
+        Sanitizes the datasets-origin-bkp by removing unnecessary columns.
 
         Parameters
         ----------

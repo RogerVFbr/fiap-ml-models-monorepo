@@ -61,7 +61,7 @@ class NewsProcessor:
         """
         Executes the processing steps on the news data.
 
-        This method checks if preprocessed news data already exists and loads it if available and reprocessing is not forced.
+        This method checks if datasets-origin-bkp-preprocessed news data already exists and loads it if available and reprocessing is not forced.
         Otherwise, it sorts the news data by the 'modified' column in descending order and applies a series of processing steps.
 
         Parameters

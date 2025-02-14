@@ -2,21 +2,26 @@ import os
 import polars as pl
 from app.news_recommendation_1 import time_it
 import torch
+import boto3
+from boto3.s3.transfer import S3Transfer
+
+from app.news_recommendation_1.s3_client import S3Client
+
 
 class DataRepository:
     """
-    A class to manage the loading, saving, and processing of datasets for a news recommendation system.
+    A class to manage the loading, saving, and processing of datasets-origin-bkp for a news recommendation system.
 
     Attributes
     ----------
-    DATA_PATH : str
+    ORIGIN_DATA_PATH : str
         Base path for the dataset.
-    PRE_PROCESSED_PATH : str
-        Path for preprocessed data.
-    BASE_DATA_PATH : str
+    PROCESSED_DATA_PATH : str
+        Path for datasets-origin-bkp-preprocessed data.
+    ORIGIN_BASE_DATA_PATH : str
         Full path to the base data directory.
-    BASE_PRE_PROCESSED_PATH : str
-        Full path to the base preprocessed data directory.
+    PRE_PROCESSED_BASE_PATH : str
+        Full path to the base datasets-origin-bkp-preprocessed data directory.
     TRAIN_DIR : str
         Directory for training data files.
     TEST_DIR : str
@@ -30,7 +35,7 @@ class DataRepository:
     NEWS_FILE : str
         Path to the news data Parquet file.
     NEWS_PRE_PROCESSED_FILE : str
-        Path to the preprocessed news data Parquet file.
+        Path to the datasets-origin-bkp-preprocessed news data Parquet file.
     NEWS_CLASSIFIED_FILE : str
         Path to the classified news data Parquet file.
     SIMILARITY_MATRIX_FILE : str
@@ -45,30 +50,37 @@ class DataRepository:
         """
         Initializes the DataRepository with paths for data storage.
         """
-        self.DATA_PATH = "challenge-webmedia-e-globo-2023"
-        self.PRE_PROCESSED_PATH = "preprocessed"
+        self.ORIGIN_DATA_PATH = "challenge-webmedia-e-globo-2023"
+        self.JOINED_DATA_PATH = "datasets-origin"
+        self.PROCESSED_DATA_PATH = "datasets-preprocessed"
 
-        self.BASE_DATA_PATH = os.path.join(os.getcwd(), self.DATA_PATH)
-        self.BASE_PRE_PROCESSED_PATH = os.path.join(os.getcwd(), self.PRE_PROCESSED_PATH)
+        self.ORIGIN_BASE_DATA_PATH = os.path.join(os.getcwd(), self.ORIGIN_DATA_PATH)
+        self.JOINED_BASE_DATA_PATH = os.path.join(os.getcwd(), self.JOINED_DATA_PATH)
+        self.PRE_PROCESSED_BASE_PATH = os.path.join(os.getcwd(), self.PROCESSED_DATA_PATH)
 
-        self.TRAIN_DIR = os.path.join(self.BASE_DATA_PATH, 'files', 'treino')
-        self.TEST_DIR = os.path.join(self.BASE_DATA_PATH, 'files', 'validacao')
-        self.NEWS_DIR = os.path.join(self.BASE_DATA_PATH, 'itens', 'itens')
+        self.TRAIN_DIR = os.path.join(self.ORIGIN_BASE_DATA_PATH, 'files', 'treino')
+        self.TEST_DIR = os.path.join(self.ORIGIN_BASE_DATA_PATH, 'files', 'validacao')
+        self.NEWS_DIR = os.path.join(self.ORIGIN_BASE_DATA_PATH, 'itens', 'itens')
 
-        self.TRAIN_FILE = os.path.join(self.TRAIN_DIR, 'user_data_train.parquet')
-        self.TEST_FILE = os.path.join(self.TEST_DIR, 'user_data_test.parquet')
-        self.NEWS_FILE = os.path.join(self.NEWS_DIR, 'item_data.parquet')
+        self.TRAIN_FILE = os.path.join(self.JOINED_DATA_PATH, 'user_data_train.parquet')
+        self.TEST_FILE = os.path.join(self.JOINED_DATA_PATH, 'user_data_test.parquet')
+        self.NEWS_FILE = os.path.join(self.JOINED_DATA_PATH, 'item_data.parquet')
 
-        self.NEWS_PRE_PROCESSED_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'news_data_preprocessed.parquet')
-        self.NEWS_CLASSIFIED_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'news_data_classified.parquet')
-        self.SIMILARITY_MATRIX_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'similarity_matrix.parquet')
-        self.FORMATTED_USER_DATA_TRAIN_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'user_data_train_formatted.parquet')
-        self.FORMATTED_USER_DATA_TEST_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'user_data_test_formatted.parquet')
-        self.PREDICTED_CLASSIC_USER_DATA_TEST_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'user_data_test_predicted_classic.parquet')
-        self.PREDICTED_NN_USER_DATA_TEST_FILE = os.path.join(self.BASE_PRE_PROCESSED_PATH, 'user_data_test_predicted_nn.parquet')
+        self.NEWS_PRE_PROCESSED_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'news_data_preprocessed.parquet')
+        self.NEWS_CLASSIFIED_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'news_data_classified.parquet')
+        self.SIMILARITY_MATRIX_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'similarity_matrix.parquet')
+        self.FORMATTED_USER_DATA_TRAIN_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_train_formatted.parquet')
+        self.FORMATTED_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_formatted.parquet')
+        self.PREDICTED_CLASSIC_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_predicted_classic.parquet')
+        self.PREDICTED_NN_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_predicted_nn.parquet')
 
         self.OUTPUT_PATH = None
         self.FILE_BASE_NAME = None
+
+        self.s3_client = S3Client()
+        self.BUCKET_NAME = "fiap-ml-models-monorepo-bucket-develop"
+        self.DATASETS_REMOTE_PREFIX = "datasets"
+
 
     # +===============================+
     # |         FULL DATASETS         |
@@ -76,7 +88,7 @@ class DataRepository:
 
     def load_dataset_from_csv(self) -> tuple[pl.DataFrame, pl.DataFrame, pl.DataFrame]:
         """
-        Loads datasets from CSV files and concatenates them into single dataframes.
+        Loads datasets-origin-bkp from CSV files and concatenates them into single dataframes.
 
         Returns
         -------
@@ -109,7 +121,7 @@ class DataRepository:
     @time_it
     def save_dataset_to_parquet(self, user_data_train: pl.DataFrame, user_data_test: pl.DataFrame, item_data: pl.DataFrame) -> None:
         """
-        Saves the datasets to Parquet files.
+        Saves the datasets-origin-bkp to Parquet files.
 
         Parameters
         ----------
@@ -133,10 +145,21 @@ class DataRepository:
         self.print_file_size(self.TEST_FILE)
         self.print_file_size(self.NEWS_FILE)
 
+    def parquet_files_exist(self) -> bool:
+        if os.path.exists(self.TRAIN_FILE) and os.path.exists(self.TEST_FILE) and os.path.exists(self.NEWS_FILE):
+            print(f"User data train parquet exists.")
+            print(f"User data test parquet exists.")
+            print(f"News data parquet exists.")
+            return True
+        return False
+
+    def download_parquet_files_from_s3(self):
+       self.s3_client.download_folder_from_s3(self.BUCKET_NAME, self.DATASETS_REMOTE_PREFIX, self.JOINED_BASE_DATA_PATH)
+
     @time_it
     def load_dataset_from_parquet(self) -> tuple[pl.DataFrame, pl.DataFrame, pl.DataFrame]:
         """
-        Loads the datasets from Parquet files.
+        Loads the datasets-origin-bkp from Parquet files.
 
         Returns
         -------
@@ -164,12 +187,12 @@ class DataRepository:
 
     def preprocessed_news_parquet_exists(self) -> bool:
         """
-        Checks if the preprocessed news Parquet file exists.
+        Checks if the datasets-origin-bkp-preprocessed news Parquet file exists.
 
         Returns
         -------
         bool
-            True if the preprocessed news Parquet file exists, False otherwise.
+            True if the datasets-origin-bkp-preprocessed news Parquet file exists, False otherwise.
 
         Example
         -------
@@ -184,20 +207,20 @@ class DataRepository:
     @time_it
     def save_preprocessed_news_to_parquet(self, news_data: pl.DataFrame) -> None:
         """
-        Saves the preprocessed news data to a Parquet file.
+        Saves the datasets-origin-bkp-preprocessed news data to a Parquet file.
 
         Parameters
         ----------
         news_data : pl.DataFrame
-            The preprocessed news data to be saved.
+            The datasets-origin-bkp-preprocessed news data to be saved.
 
         Example
         -------
         >>> repo = DataRepository()
         >>> repo.save_preprocessed_news_to_parquet(news_data)
         """
-        if not os.path.exists(self.BASE_PRE_PROCESSED_PATH):
-            os.makedirs(self.BASE_PRE_PROCESSED_PATH)
+        if not os.path.exists(self.PRE_PROCESSED_BASE_PATH):
+            os.makedirs(self.PRE_PROCESSED_BASE_PATH)
 
         news_data.write_parquet(self.NEWS_PRE_PROCESSED_FILE)
         self.print_file_size(self.NEWS_PRE_PROCESSED_FILE)
@@ -205,12 +228,12 @@ class DataRepository:
     @time_it
     def load_preprocessed_news_from_parquet(self) -> pl.DataFrame:
         """
-        Loads the preprocessed news data from a Parquet file.
+        Loads the datasets-origin-bkp-preprocessed news data from a Parquet file.
 
         Returns
         -------
         pl.DataFrame
-            The preprocessed news data.
+            The datasets-origin-bkp-preprocessed news data.
 
         Example
         -------
@@ -261,8 +284,8 @@ class DataRepository:
         >>> repo = DataRepository()
         >>> repo.save_classified_news_to_parquet(news_data, similarity_matrix)
         """
-        if not os.path.exists(self.BASE_PRE_PROCESSED_PATH):
-            os.makedirs(self.BASE_PRE_PROCESSED_PATH)
+        if not os.path.exists(self.PRE_PROCESSED_BASE_PATH):
+            os.makedirs(self.PRE_PROCESSED_BASE_PATH)
 
         news_data.write_parquet(self.NEWS_CLASSIFIED_FILE)
         similarity_matrix.write_parquet(self.SIMILARITY_MATRIX_FILE)
@@ -328,8 +351,8 @@ class DataRepository:
         >>> repo = DataRepository()
         >>> repo.save_feature_engineered_user_data_to_parquet(user_data_train)
         """
-        if not os.path.exists(self.BASE_PRE_PROCESSED_PATH):
-            os.makedirs(self.BASE_PRE_PROCESSED_PATH)
+        if not os.path.exists(self.PRE_PROCESSED_BASE_PATH):
+            os.makedirs(self.PRE_PROCESSED_BASE_PATH)
 
         user_data_train.write_parquet(self.FORMATTED_USER_DATA_TRAIN_FILE)
         user_data_test.write_parquet(self.FORMATTED_USER_DATA_TEST_FILE)
@@ -369,8 +392,8 @@ class DataRepository:
 
     @time_it
     def save_predicted_classic_user_data_test_to_parquet(self, user_data_test: pl.DataFrame) -> None:
-        if not os.path.exists(self.BASE_PRE_PROCESSED_PATH):
-            os.makedirs(self.BASE_PRE_PROCESSED_PATH)
+        if not os.path.exists(self.PRE_PROCESSED_BASE_PATH):
+            os.makedirs(self.PRE_PROCESSED_BASE_PATH)
 
         user_data_test.write_parquet(self.PREDICTED_CLASSIC_USER_DATA_TEST_FILE)
         self.print_file_size(self.PREDICTED_CLASSIC_USER_DATA_TEST_FILE)
@@ -392,8 +415,8 @@ class DataRepository:
 
     @time_it
     def save_predicted_nn_user_data_test_to_parquet(self, user_data_test: pl.DataFrame) -> None:
-        if not os.path.exists(self.BASE_PRE_PROCESSED_PATH):
-            os.makedirs(self.BASE_PRE_PROCESSED_PATH)
+        if not os.path.exists(self.PRE_PROCESSED_BASE_PATH):
+            os.makedirs(self.PRE_PROCESSED_BASE_PATH)
 
         user_data_test.write_parquet(self.PREDICTED_NN_USER_DATA_TEST_FILE)
         self.print_file_size(self.PREDICTED_NN_USER_DATA_TEST_FILE)
