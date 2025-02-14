@@ -56,33 +56,7 @@ class NewsClusterizer:
             random_state=42
         )
 
-        # Inertia: 244831.9700560397
-        # Davies - Bouldin
-        # Index: 8.230525835457774
-        # Calinski - Harabasz
-        # Index: 886.1074400555872
-
         clusters.fit(matrix)
-
-        # # Inertia
-        # print(f'Inertia: {clusters.inertia_}')
-        # # print("Measures the sum of squared distances of samples to their closest cluster center.")
-        # # print("Lower values indicate better clustering.")
-        # # print()
-        #
-        # # Convert sparse matrix to dense array
-        # dense_matrix = matrix.toarray()
-        #
-        # # Davies-Bouldin Index
-        # print(f'Davies-Bouldin Index: {davies_bouldin_score(dense_matrix, clusters.labels_)}')
-        # # print("Measures the average similarity ratio of each cluster with its most similar cluster.")
-        # # print("Lower values indicate better clustering.")
-        # # print()
-        #
-        # # Calinski-Harabasz Index
-        # print(f'Calinski-Harabasz Index: {calinski_harabasz_score(dense_matrix, clusters.labels_)}')
-        # # print("Measures the ratio of the sum of between-cluster dispersion and within-cluster dispersion.")
-        # # print("Higher values indicate better clustering.")
 
         return clusters.cluster_centers_, clusters.labels_
 

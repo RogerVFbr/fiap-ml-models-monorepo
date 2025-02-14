@@ -2,8 +2,9 @@ import os
 import polars as pl
 from app.news_recommendation_1 import time_it
 import torch
-import boto3
-from boto3.s3.transfer import S3Transfer
+from datetime import datetime
+import numpy as np
+import joblib
 
 from app.news_recommendation_1.s3_client import S3Client
 
@@ -44,12 +45,18 @@ class DataRepository:
         Path to the formatted user data Parquet file.
     """
     OUTPUT_PATH = None
-    FILE_BASE_NAME = None
+    CURRENT_DATE_TIME = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
 
-    def __init__(self):
+    def __init__(self, output_path: str = None):
         """
         Initializes the DataRepository with paths for data storage.
         """
+        self.s3_client = S3Client()
+
+        self.OUTPUT_PATH = output_path
+        self.BUCKET_NAME = "fiap-ml-models-monorepo-bucket-develop"
+        self.DATASETS_REMOTE_PREFIX = "datasets"
+
         self.ORIGIN_DATA_PATH = "challenge-webmedia-e-globo-2023"
         self.JOINED_DATA_PATH = "datasets-origin"
         self.PROCESSED_DATA_PATH = "datasets-preprocessed"
@@ -73,14 +80,6 @@ class DataRepository:
         self.FORMATTED_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_formatted.parquet')
         self.PREDICTED_CLASSIC_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_predicted_classic.parquet')
         self.PREDICTED_NN_USER_DATA_TEST_FILE = os.path.join(self.PRE_PROCESSED_BASE_PATH, 'user_data_test_predicted_nn.parquet')
-
-        self.OUTPUT_PATH = None
-        self.FILE_BASE_NAME = None
-
-        self.s3_client = S3Client()
-        self.BUCKET_NAME = "fiap-ml-models-monorepo-bucket-develop"
-        self.DATASETS_REMOTE_PREFIX = "datasets"
-
 
     # +===============================+
     # |         FULL DATASETS         |
@@ -430,18 +429,47 @@ class DataRepository:
     # |            HELPERS            |
     # +===============================+
 
-    def save_model(self):
-        print(f"Saving model to path '{self.OUTPUT_PATH}'")
+    def save_pytorch_model(self, model_name: str, model: torch.nn.Module, test_x: np.ndarray) -> None:
+        print(f"Saving PyTorch model to path '{self.OUTPUT_PATH}'")
 
         if not os.path.exists(self.OUTPUT_PATH):
             os.makedirs(self.OUTPUT_PATH)
 
-        file_name = self.FILE_BASE_NAME + ".pth"
-        tensor = torch.FloatTensor(self.test_x)
-        traced_cell = torch.jit.trace(self.MODEL, tensor)
+        file_name = self.__build_file_base_name(model_name) + ".pth"
+        tensor = torch.FloatTensor(test_x)
+        traced_cell = torch.jit.trace(model, tensor)
         torch.jit.save(traced_cell, file_name)
 
         print(f"Model saved -> {file_name}")
+        self.print_file_size(file_name)
+
+    def save_sklearn_model(self, model_name: str, model: torch.nn.Module) -> None:
+        print(f"Saving SkLearn model to path '{self.OUTPUT_PATH}'")
+
+        if not os.path.exists(self.OUTPUT_PATH):
+            os.makedirs(self.OUTPUT_PATH)
+
+        file_name = self.__build_file_base_name(model_name) + ".pkl"
+        joblib.dump(model, file_name)
+
+        print(f"Model saved -> {file_name}")
+        self.print_file_size(file_name)
+
+    @time_it
+    def save_polars_df_to_parquet(self, df: pl.DataFrame, name: str) -> None:
+        file_name = self.__build_file_base_name(name) + ".parquet"
+
+        directory = os.path.dirname(file_name)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        df.write_parquet(file_name)
+        self.print_file_size(file_name)
+
+    def __build_file_base_name(self, file_name: str) -> str:
+
+        filename_with_datetime = f"{file_name}-{self.CURRENT_DATE_TIME}"
+        return os.path.join(self.OUTPUT_PATH, filename_with_datetime)
 
     def print_file_size(self, file_path: str) -> None:
         """

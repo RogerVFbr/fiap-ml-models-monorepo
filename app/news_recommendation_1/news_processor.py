@@ -88,7 +88,7 @@ class NewsProcessor:
 
         for step in self.steps:
             news_data = step(news_data)
-            self.print_soup(news_data)
+            self.print_soup(news_data.head(5))
 
         self.data_repo.save_preprocessed_news_to_parquet(news_data)
         return news_data

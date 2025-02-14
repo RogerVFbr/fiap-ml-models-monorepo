@@ -110,13 +110,12 @@ class DataService:
         pl.DataFrame
             The adjusted testing data.
         """
-        user_data_test = user_data_test.with_columns([
+        return user_data_test.with_columns([
             pl.col('userType').cast(pl.Categorical),
             pl.col('history').str.replace_all(r"[^a-zA-Z0-9-\s]", "").str.split('\n '),
             (pl.col('timestampHistory').str.replace_all(r"[^a-zA-Z0-9-\s]", "").str.split(' ').cast(
                 pl.List(pl.Int64)) * 1000).cast(pl.List(pl.Int64))
         ])
-        return user_data_test
 
     @time_it
     def adjust_news_data_datatypes(self, news_data: pl.DataFrame) -> pl.DataFrame:
@@ -133,11 +132,10 @@ class DataService:
         pl.DataFrame
             The adjusted news data.
         """
-        news_data = news_data.with_columns([
+        return news_data.with_columns([
             pl.col('issued').str.strptime(pl.Datetime, "%Y-%m-%d %H:%M:%S%z"),
             pl.col('modified').str.strptime(pl.Datetime, "%Y-%m-%d %H:%M:%S%z")
         ])
-        return news_data
 
     @time_it
     def filter(self, user_data_train, user_data_test, news_data):

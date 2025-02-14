@@ -21,6 +21,8 @@ from app.news_recommendation_1.data_repository import DataRepository
 
 class NewsClusterNNPredictor:
 
+    MODEL_NAME = "BetelgeuseNN"
+
     TRAIN_EPOCHS = 10
     LEARNING_RATE = 0.01
     BATCH_SIZE = 1024
@@ -31,7 +33,7 @@ class NewsClusterNNPredictor:
 
     FORCE_REPROCESS = False
 
-    def __init__(self, force_reprocess: bool):
+    def __init__(self, force_reprocess: bool, output_path: str):
         self.FORCE_REPROCESS = force_reprocess
 
         self.set_seed(42)
@@ -40,7 +42,7 @@ class NewsClusterNNPredictor:
         self.optimizer = None
         self.device = "cpu"
 
-        self.data_repo = DataRepository()
+        self.data_repo = DataRepository(output_path)
 
         warnings.filterwarnings("ignore", category=UndefinedMetricWarning)
 
@@ -63,6 +65,7 @@ class NewsClusterNNPredictor:
 
         user_data_test = self.set_predictions_on_dataset(user_data_test)
         self.data_repo.save_predicted_nn_user_data_test_to_parquet(user_data_test)
+        self.data_repo.save_pytorch_model(self.MODEL_NAME, self.SELECTED_MODEL, X_test.cpu().numpy())
         return user_data_test
 
     @time_it
