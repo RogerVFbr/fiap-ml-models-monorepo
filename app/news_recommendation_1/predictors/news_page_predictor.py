@@ -2,6 +2,8 @@ import polars as pl
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
 
+from app.news_recommendation_1 import time_it
+
 
 class NewsPagePredictor:
     def __init__(self):
@@ -10,6 +12,7 @@ class NewsPagePredictor:
             max_df=0.9,
             min_df=5)
 
+    @time_it
     def predict(self, user_data_test: pl.DataFrame, news_data: pl.DataFrame, similarity_matrix: pl.DataFrame):
         # user_data_test = user_data_test.select(pl.all().gather(range(500)))
 

@@ -11,16 +11,18 @@ from app.news_recommendation_1.predictors.news_cluster_predictor_classic_presets
 
 class NewsClusterClassicPredictor:
 
+    MODEL_NAME = "BetelgeuseClassic"
+
     SELECTED_MODEL = None
     SELECTION_INDEX = 0
     PREDICTIONS = None
 
     FORCE_REPROCESS = False
 
-    def __init__(self, force_reprocess: bool):
+    def __init__(self, force_reprocess: bool, output_path: str):
         self.FORCE_REPROCESS = force_reprocess
         self.presets = NewsClusterClassicPredictorPresets()
-        self.data_repo = DataRepository()
+        self.data_repo = DataRepository(output_path)
 
     @time_it
     def execute(self, user_data_train: pl.DataFrame, user_data_test: pl.DataFrame, similarity_matrix: pl.DataFrame):
@@ -34,6 +36,7 @@ class NewsClusterClassicPredictor:
         user_data_test = self.set_predictions_on_dataset(user_data_test)
 
         self.data_repo.save_predicted_classic_user_data_test_to_parquet(user_data_test)
+        self.data_repo.save_sklearn_model(self.MODEL_NAME, self.SELECTED_MODEL.best_estimator_)
         return user_data_test
 
     @time_it
@@ -108,7 +111,7 @@ class NewsClusterClassicPredictor:
 
         print()
         print("Selected Model:")
-        print(self.SELECTED_MODEL)
+        print(self.SELECTED_MODEL.best_estimator_)
 
         return hypothesis_1_df, hypothesis_2_df, hypothesis_3_df
 

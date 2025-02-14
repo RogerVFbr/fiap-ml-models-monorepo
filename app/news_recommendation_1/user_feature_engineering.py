@@ -158,43 +158,7 @@ class UserFeatureEngineering:
         user_data_train = user_data_train.with_columns(cols_train + targets_train)
         user_data_test = user_data_test.with_columns(cols_test + targets_test)
 
-        # print(user_data_train.head(5))
         return user_data_train, user_data_test
-
-    # @time_it
-    # def populate_train_feature_and_target_columns(self, user_data_train: pl.DataFrame):
-    #     # Define a function to calculate the weight for each history entry
-    #     def calculate_weight(row):
-    #         weights = [
-    #             row['timeOnPageHistory_norm'] * self.FEATURE_WEIGHTS['timeOnPageHistory_norm'],
-    #             row['scrollPercentageHistory_norm'] * self.FEATURE_WEIGHTS['scrollPercentageHistory_norm'],
-    #             row['pageVisitsCountHistory_norm'] * self.FEATURE_WEIGHTS['pageVisitsCountHistory_norm'],
-    #             row['timestampHistory_norm'] * self.FEATURE_WEIGHTS['timestampHistory_norm'],
-    #         ]
-    #         return sum(weights) / sum(self.FEATURE_WEIGHTS.values())
-    #
-    #     # Apply the weight calculation and update the cluster columns
-    #     for i in range(self.FEATURE_COUNT):
-    #         user_data_train = user_data_train.with_columns([
-    #             (pl.col('clusterHistory').list.eval(
-    #                 pl.element().map_elements(lambda history: calculate_weight(history), return_dtype=pl.Float32)
-    #             ) / pl.col('clusterHistory').list.eval(
-    #                 pl.element().map_elements(lambda history: pl.col('clusterHistory').list.count(history), return_dtype=pl.Float32)
-    #             )).alias(f'cluster_{i}')
-    #         ])
-    #
-    #     # Set the target cluster and target page
-    #     user_data_train = user_data_train.with_columns([
-    #         pl.col('clusterHistory').list.last().alias('target_cluster'),
-    #         pl.col('history').list.last().alias('target_page'),
-    #         pl.col('timestampHistory').list.last().map_elements(lambda x: datetime.fromtimestamp(x / 1000),
-    #                                                            return_dtype=pl.Datetime).alias('target_timestamp')
-    #     ])
-    #
-    #     print()
-    #     print(user_data_train.head(5))
-    #
-    #     return user_data_train
 
     @time_it
     def populate_train_feature_and_target_columns(self, user_data_train: pl.DataFrame):
@@ -278,7 +242,7 @@ class UserFeatureEngineering:
         ])
 
         print()
-        print(user_data_test.head(20))
+        print(user_data_test.head(5))
 
         invalid_target_cluster_count = user_data_test.filter(
             pl.col('target_cluster').is_null() | pl.col('target_cluster').cast(pl.Utf8).str.contains(r'\D')

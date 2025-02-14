@@ -142,7 +142,6 @@ class NewsClusterInferenceModel_6(nn.Module):
         self.bn5 = nn.BatchNorm1d(32)
         self.fc6 = nn.Linear(32, output_dim)
         self.dropout = nn.Dropout(0.5)
-        # self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
         x = F.relu(self.bn1(self.fc1(x)))
@@ -155,8 +154,4 @@ class NewsClusterInferenceModel_6(nn.Module):
         x = self.dropout(x)
         x = F.relu(self.bn5(self.fc5(x)))
         x = self.fc6(x)
-        # x = self.softmax(x)
         return x
-
-
-
