@@ -14,8 +14,8 @@ class NewsRecommenderSystem:
     FORCE_REPROCESS_NEWS_PROCESSOR = False
     FORCE_REPROCESS_NEWS_CLUSTERIZER = False
     FORCE_REPROCESS_USER_FEAT_ENGINEERING = False
-    FORCE_REPROCESS_CLUSTER_NN_PREDICTOR = True
-    FORCE_REPROCESS_CLUSTER_CLASSIC_PREDICTOR = True
+    FORCE_REPROCESS_CLUSTER_NN_PREDICTOR = False
+    FORCE_REPROCESS_CLUSTER_CLASSIC_PREDICTOR = False
 
     OUTPUT_PATH = None
 
@@ -41,10 +41,4 @@ class NewsRecommenderSystem:
         user_data_test = self.news_cluster_nn_predictor.execute(user_data_train, user_data_test, similarity_matrix)
         user_data_test = self.news_cluster_classic_predictor.execute(user_data_train, user_data_test, similarity_matrix)
         # self.news_page_predictor.predict(user_data_test, news_data, similarity_matrix)
-
-        self.data_delivery.execute(user_data_test, user_data_train, news_data, similarity_matrix)
-
-
-if __name__ == "__main__":
-    train = NewsRecommenderSystem()
-    train.run()
+        self.data_delivery.execute(user_data_test, user_data_train, news_data, similarity_matrix, UserFeatureEngineering.FEATURE_WEIGHTS)
