@@ -12,11 +12,20 @@ class DataDeliverablesBuilder:
         self.DATA_PATH = "data-betelgeuse"
         self.NEWS_FILE = os.path.join(self.DATA_PATH, 'news_data')
         self.MATRIX_FILE = os.path.join(self.DATA_PATH, 'similarity_matrix')
+        self.WEIGHTS_FILE = os.path.join(self.DATA_PATH, 'feature_weights')
 
+    def execute(self, user_data_test: pl.DataFrame, user_data_train: pl.DataFrame, news_data: pl.DataFrame, similarity_matrix: pl.DataFrame, feature_weights: dict):
+        news_data = self.filter_news_data(news_data)
 
-    def execute(self, user_data_test: pl.DataFrame, user_data_train: pl.DataFrame, news_data: pl.DataFrame, similarity_matrix: pl.DataFrame):
+        # self.explore(user_data_train, user_data_test, news_data, similarity_matrix)
 
-        news_data = (news_data
+        self.data_repo.save_polars_df_to_parquet(news_data, self.NEWS_FILE)
+        self.data_repo.save_polars_df_to_parquet(similarity_matrix, self.MATRIX_FILE)
+        self.data_repo.save_polars_df_to_parquet(pl.DataFrame(feature_weights), self.WEIGHTS_FILE)
+
+    @staticmethod
+    def filter_news_data(news_data: pl.DataFrame):
+        return (news_data
         .select(
             pl.col("page"),
             pl.col("issued"),
@@ -26,51 +35,14 @@ class DataDeliverablesBuilder:
             pl.col("issued") > pl.datetime(2022, 6, 1, 0, 0, 0, time_zone='UTC')
         ))
 
-        self.explore(user_data_train, user_data_test, news_data, similarity_matrix)
-
-        self.data_repo.save_polars_df_to_parquet(news_data, self.NEWS_FILE)
-        self.data_repo.save_polars_df_to_parquet(similarity_matrix, self.MATRIX_FILE)
-
     @time_it
-    def explore(self, user_data_train, user_data_test, news_data, similarity_matrix):
-        # print()
-        # print('+=========================+')
-        # print('|          TRAIN          |')
-        # print('+=========================+')
-        # # print(user_data_train.describe())
-        # # print(f'Number of unique user ids: {user_data_test["userId"].n_unique()} (Total rows: {user_data_test.shape[0]})')
-        # # print(f'historySize Max/Min : {user_data_train["historySize"].min()} / {user_data_train["historySize"].max()}')
-        # print()
-        # print("HEAD")
-        # print(user_data_train.head(5))
-        # # print()
-        # # print("TAIL")
-        # # print(user_data_train.tail(5))
-
-        # print()
-        # print('+=========================+')
-        # print('|           TEST          |')
-        # print('+=========================+')
-        # print(user_data_test.describe())
-        # print(f'Number of unique user ids: {user_data_test["userId"].n_unique()} (Total rows: {user_data_test.shape[0]})')
-        # print()
-        # print("HEAD")
-        # print(user_data_test.head(5))
-        # print()
-        # print("TAIL")
-        # print(user_data_test.tail(5))
-
-        print()
-        print('+=========================+')
-        print('|        NEWS DATA        |')
-        print('+=========================+')
-        # print(news_data.describe())
-        # print()
+    def explore(self, df):
+        print("EXPLORE")
         print("HEAD")
-        print(news_data.head(5))
+        print(df.head(5))
         print()
         print("TAIL")
-        print(news_data.tail(1))
+        print(df.tail(1))
         print()
 
         return None

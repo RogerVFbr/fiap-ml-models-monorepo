@@ -77,15 +77,15 @@ class NewsClusterNNPredictor:
         data_test = user_data_test.select([cs.starts_with("cluster_"), "target_cluster"]).to_torch()
         X_test = data_test[:, :-1].to(dtype=torch.float32, device=self.device)
         y_test = data_test[:, -1].long().to(self.device)
-
-        print("Shape of X_train .............:", X_train.shape)
-        print("Shape of y_train .............:", y_train.shape)
-        print("Data types of X_train ........:", X_train.dtype)
-        print("Data types of y_train ........:", y_train.dtype)
-        print("Shape of X_test ..............:", X_test.shape)
-        print("Shape of y_test ..............:", y_test.shape)
-        print("Data types of X_test .........:", X_test.dtype)
-        print("Data types of y_test .........:", y_test.dtype)
+        #
+        # print("Shape of X_train .............:", X_train.shape)
+        # print("Shape of y_train .............:", y_train.shape)
+        # print("Data types of X_train ........:", X_train.dtype)
+        # print("Data types of y_train ........:", y_train.dtype)
+        # print("Shape of X_test ..............:", X_test.shape)
+        # print("Shape of y_test ..............:", y_test.shape)
+        # print("Data types of X_test .........:", X_test.dtype)
+        # print("Data types of y_test .........:", y_test.dtype)
 
         return X_train.shape[1], X_train, X_test, y_train, y_test
 
