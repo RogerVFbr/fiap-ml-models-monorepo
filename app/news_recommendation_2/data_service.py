@@ -21,7 +21,7 @@ class DataService:
     @time_it
     def onboard(self):
         """
-        Loads, adjusts, filters, and sanitizes the datasets.
+        Loads, adjusts, filters, and sanitizes the datasets-origin-bkp.
 
         Returns
         -------
@@ -33,6 +33,9 @@ class DataService:
         >>> service = DataService()
         >>> train_data, test_data, news_data = service.onboard()
         """
+        if not self.data_repo.parquet_files_exist():
+            self.data_repo.download_parquet_files_from_s3()
+
         user_data_train, user_data_test, news_data = self.data_repo.load_dataset_from_parquet()
         user_data_train, user_data_test, news_data = self.adjust_datatypes(user_data_train, user_data_test, news_data)
         user_data_train, user_data_test, news_data = self.filter(user_data_train, user_data_test, news_data)
@@ -43,7 +46,7 @@ class DataService:
     @time_it
     def adjust_datatypes(self, user_data_train, user_data_test, news_data):
         """
-        Adjusts the data types of columns in the datasets.
+        Adjusts the data types of columns in the datasets-origin-bkp.
 
         Parameters
         ----------
@@ -80,17 +83,18 @@ class DataService:
         pl.DataFrame
             The adjusted training data.
         """
-        user_data_train = user_data_train.with_columns([
+        return user_data_train.with_columns([
             pl.col('userType').cast(pl.Categorical),
             pl.col('historySize').cast(pl.Int32),
             pl.col('history').str.split(', '),
-            (pl.col('timestampHistory').str.split(', ').cast(pl.List(pl.Int64)) * 1000).cast(pl.List(pl.Datetime)),
+            pl.col('timestampHistory').str.split(', ').cast(pl.List(pl.Int64)),
             pl.col('numberOfClicksHistory').str.split(', ').cast(pl.List(pl.Int32)),
             pl.col('timeOnPageHistory').str.split(', ').cast(pl.List(pl.Int32)),
             pl.col('scrollPercentageHistory').str.split(', ').cast(pl.List(pl.Float64)),
             pl.col('pageVisitsCountHistory').str.split(', ').cast(pl.List(pl.Int32)),
+        ]).with_columns([
+            (pl.col('timestampHistory') * 1000).cast(pl.List(pl.Datetime)).alias('timestampHistory_hr')
         ])
-        return user_data_train
 
     @time_it
     def adjust_user_data_test_datatypes(self, user_data_test: pl.DataFrame) -> pl.DataFrame:
@@ -107,13 +111,12 @@ class DataService:
         pl.DataFrame
             The adjusted testing data.
         """
-        user_data_test = user_data_test.with_columns([
+        return user_data_test.with_columns([
             pl.col('userType').cast(pl.Categorical),
             pl.col('history').str.replace_all(r"[^a-zA-Z0-9-\s]", "").str.split('\n '),
             (pl.col('timestampHistory').str.replace_all(r"[^a-zA-Z0-9-\s]", "").str.split(' ').cast(
-                pl.List(pl.Int64)) * 1000).cast(pl.List(pl.Int64)).cast(pl.List(pl.Datetime))
+                pl.List(pl.Int64)) * 1000).cast(pl.List(pl.Int64))
         ])
-        return user_data_test
 
     @time_it
     def adjust_news_data_datatypes(self, news_data: pl.DataFrame) -> pl.DataFrame:
@@ -130,16 +133,15 @@ class DataService:
         pl.DataFrame
             The adjusted news data.
         """
-        news_data = news_data.with_columns([
+        return news_data.with_columns([
             pl.col('issued').str.strptime(pl.Datetime, "%Y-%m-%d %H:%M:%S%z"),
             pl.col('modified').str.strptime(pl.Datetime, "%Y-%m-%d %H:%M:%S%z")
         ])
-        return news_data
 
     @time_it
     def filter(self, user_data_train, user_data_test, news_data):
         """
-        Filters the datasets to ensure data consistency.
+        Filters the datasets-origin-bkp to ensure data consistency.
 
         Parameters
         ----------
@@ -186,8 +188,7 @@ class DataService:
         user_data_train = user_data_train.filter(pl.col('pageVisitsCountHistory').list.len() == pl.col('historySize'))
         final_count = user_data_train.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'TRAIN ...: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'TRAIN ...: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return user_data_train
 
@@ -210,8 +211,7 @@ class DataService:
         user_data_test = user_data_test.filter(pl.col('history').list.len() >= 2)
         final_count = user_data_test.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'TEST ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'TEST ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return user_data_test
 
@@ -234,15 +234,14 @@ class DataService:
         news_data = news_data.unique(subset=['page'])
         final_count = news_data.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'NEWS ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'NEWS ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return news_data
 
     @time_it
     def sanitize(self, user_data_train: pl.DataFrame, user_data_test: pl.DataFrame, news_data: pl.DataFrame):
         """
-        Sanitizes the datasets by removing unnecessary columns.
+        Sanitizes the datasets-origin-bkp by removing unnecessary columns.
 
         Parameters
         ----------

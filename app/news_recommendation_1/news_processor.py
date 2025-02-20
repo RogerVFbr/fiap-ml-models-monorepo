@@ -23,6 +23,44 @@ class NewsProcessor:
         An instance of DataRepository to manage data loading and saving.
     steps : list
         A list of processing steps to be applied to the news data.
+
+    Methods
+    -------
+    __init__(self, force_reprocess: bool)
+        Initializes the NewsProcessor with a flag to force reprocessing.
+    execute(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Executes the processing steps on the news data.
+    prepare_soup_and_tokenize(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Prepares the soup column by concatenating title and caption, and tokenizes it.
+    remove_punctuation_and_lowercase(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Removes punctuation and converts text to lowercase.
+    remove_stopwords(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Removes stopwords from the text.
+    remove_if_contains_numbers(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Removes words that contain numbers.
+    remove_non_nouns(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Removes non-noun words from the text.
+    prepare_classes(self) -> dict
+        Prepares a set of non-noun classes.
+    lemmatize(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Lemmatizes the text in the soup column.
+    remove_accents(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Removes accents from the text.
+    join_soup_lists(self, news_data: pl.DataFrame) -> pl.DataFrame
+        Joins the list of words in the soup column into a single string.
+    print_soup(self, news_data: pl.DataFrame) -> None
+        Prints the soup and soup_clean columns for debugging purposes.
+
+    Usage Examples
+    --------------
+    >>> processor = NewsProcessor(force_reprocess=True)
+    >>> news_data = pl.DataFrame({
+    ...     'title': ['Title 1', 'Title 2'],
+    ...     'caption': ['Caption 1', 'Caption 2'],
+    ...     'modified': [1627849200, 1627849201]
+    ... })
+    >>> processed_data = processor.execute(news_data)
+    >>> print(processed_data)
     """
 
     FORCE_REPROCESS = False
@@ -155,6 +193,15 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with punctuation removed and text in lowercase.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Title', '1'], ['Title', '2']]
+        ... })
+        >>> processed_data = processor.remove_punctuation_and_lowercase(news_data)
+        >>> print(processed_data)
         """
         punctuation_table = str.maketrans('', '', string.punctuation)
 
@@ -188,6 +235,15 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with stopwords removed.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['o', 'Title', '1'], ['a', 'Title', '2']]
+        ... })
+        >>> processed_data = processor.remove_stopwords(news_data)
+        >>> print(processed_data)
         """
         stop_words = set(stopwords.words('portuguese'))
 
@@ -216,6 +272,15 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with words containing numbers removed.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Title1', 'Title'], ['Title2', 'Title']]
+        ... })
+        >>> processed_data = processor.remove_if_contains_numbers(news_data)
+        >>> print(processed_data)
         """
         def remove(text: pl.Series):
             words = text.to_list()
@@ -242,6 +307,15 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with non-noun words removed.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Title', 'is'], ['Title', 'are']]
+        ... })
+        >>> processed_data = processor.remove_non_nouns(news_data)
+        >>> print(processed_data)
         """
         classes = self.prepare_classes()
 
@@ -264,6 +338,12 @@ class NewsProcessor:
         -------
         set
             A set of non-noun classes.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> classes = processor.prepare_classes()
+        >>> print(classes)
         """
         mac_morpho_tagged = nltk.corpus.mac_morpho.tagged_words()
         return {key.lower(): value for key, value in mac_morpho_tagged if value not in ['N', 'NPROP']}
@@ -287,6 +367,15 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with lemmatized text.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Titles', 'are'], ['Titles', 'is']]
+        ... })
+        >>> processed_data = processor.lemmatize(news_data)
+        >>> print(processed_data)
         """
         nlp = spacy.load('pt_core_news_sm', exclude=[
             "ner",
@@ -330,16 +419,23 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with accents removed.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Título', 'é'], ['Título', 'são']]
+        ... })
+        >>> processed_data = processor.remove_accents(news_data)
+        >>> print(processed_data)
         """
         def remove(text: pl.Series):
             words = text.to_list()
             return [unidecode.unidecode(word) for word in words]
 
-        news_data = news_data.with_columns([
+        return news_data.with_columns([
             pl.col('soup_clean').map_elements(lambda x: remove(x), return_dtype=pl.List(pl.Utf8))
         ])
-
-        return news_data
 
     @time_it
     def join_soup_lists(self, news_data: pl.DataFrame) -> pl.DataFrame:
@@ -358,12 +454,19 @@ class NewsProcessor:
         -------
         pl.DataFrame
             The news data with the soup column joined into a single string.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup_clean': [['Title', 'is'], ['Title', 'are']]
+        ... })
+        >>> processed_data = processor.join_soup_lists(news_data)
+        >>> print(processed_data)
         """
-        news_data = news_data.with_columns([
+        return news_data.with_columns([
             pl.col('soup_clean').list.join(' ')
         ])
-
-        return news_data
 
     def print_soup(self, news_data: pl.DataFrame) -> None:
         """
@@ -375,6 +478,15 @@ class NewsProcessor:
         ----------
         news_data : pl.DataFrame
             The news data to be printed.
+
+        Example
+        -------
+        >>> processor = NewsProcessor(force_reprocess=True)
+        >>> news_data = pl.DataFrame({
+        ...     'soup': ['Title is', 'Title are'],
+        ...     'soup_clean': [['Title', 'is'], ['Title', 'are']]
+        ... })
+        >>> processor.print_soup(news_data)
         """
         if 'soup_clean' in news_data.columns:
             data = news_data.select(['soup', 'soup_clean'])

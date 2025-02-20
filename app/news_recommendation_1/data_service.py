@@ -83,7 +83,7 @@ class DataService:
         pl.DataFrame
             The adjusted training data.
         """
-        user_data_train = user_data_train.with_columns([
+        return user_data_train.with_columns([
             pl.col('userType').cast(pl.Categorical),
             pl.col('historySize').cast(pl.Int32),
             pl.col('history').str.split(', '),
@@ -92,8 +92,9 @@ class DataService:
             pl.col('timeOnPageHistory').str.split(', ').cast(pl.List(pl.Int32)),
             pl.col('scrollPercentageHistory').str.split(', ').cast(pl.List(pl.Float64)),
             pl.col('pageVisitsCountHistory').str.split(', ').cast(pl.List(pl.Int32)),
+        ]).with_columns([
+            (pl.col('timestampHistory') * 1000).cast(pl.List(pl.Datetime)).alias('timestampHistory_hr')
         ])
-        return user_data_train
 
     @time_it
     def adjust_user_data_test_datatypes(self, user_data_test: pl.DataFrame) -> pl.DataFrame:
@@ -187,8 +188,7 @@ class DataService:
         user_data_train = user_data_train.filter(pl.col('pageVisitsCountHistory').list.len() == pl.col('historySize'))
         final_count = user_data_train.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'TRAIN ...: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'TRAIN ...: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return user_data_train
 
@@ -211,8 +211,7 @@ class DataService:
         user_data_test = user_data_test.filter(pl.col('history').list.len() >= 2)
         final_count = user_data_test.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'TEST ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'TEST ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return user_data_test
 
@@ -235,8 +234,7 @@ class DataService:
         news_data = news_data.unique(subset=['page'])
         final_count = news_data.shape[0]
         discarded_count = initial_count - final_count
-        print(
-            f'NEWS ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
+        print(f'NEWS ....: Number of discarded rows: {discarded_count} (Initial: {initial_count}, Final: {final_count})')
 
         return news_data
 
