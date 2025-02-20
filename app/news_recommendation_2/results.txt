@@ -1,0 +1,331 @@
+PREDICTION RESULTS (Selected by 'count', total samples: 14518, range(5000), window_in_days: 7)
+shape: (5, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria(str)  ┆ Match Count(i64)  ┆ Accuracy(str)  ┆ F1 Score(str)  ┆ Precision(str)  ┆ Recall(str)  │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 2                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 3                 ┆ 0.02 %         ┆ 0.02 %         ┆ 0.02 %          ┆ 0.02 %       │
+│ Hypothesis 4   ┆ 3                 ┆ 0.02 %         ┆ 0.02 %         ┆ 0.02 %          ┆ 0.02 %       │
+│ Hypothesis 5   ┆ 3                 ┆ 0.02 %         ┆ 0.02 %         ┆ 0.02 %          ┆ 0.02 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_recommendation_system.NewsRecommenderSystem.run] Elapsed: 4m 16s 352ms.
+
+PREDICTION RESULTS (Selected by 'scrollPercentage_scaled', total samples: 14518, range(5000), window_in_days: 7)
+shape: (5, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria(str)  ┆ Match Count(i64)  ┆ Accuracy(str)  ┆ F1 Score(str)  ┆ Precision(str)  ┆ Recall(str)  │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 16                ┆ 0.11 %         ┆ 0.12 %         ┆ 0.13 %          ┆ 0.11 %       │
+│ Hypothesis 5   ┆ 19                ┆ 0.13 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.13 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<= == [news_recommendation_system.NewsRecommenderSystem.run] Elapsed: 4m 13s 955 ms.
+
+PREDICTION RESULTS (Selected by 'count', total samples: 14518, window_in_days: 3)
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 2   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 4   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 5   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 6   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 2                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 3                 ┆ 0.02 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.02 %       │
+│ Hypothesis 9   ┆ 3                 ┆ 0.02 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.02 %       │
+│ Hypothesis 10  ┆ 3                 ┆ 0.02 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.02 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 24s 631ms.
+
+
+PREDICTION RESULTS (Selected by 'count', total samples: 103265, window_in_days: 1)
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 7                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 6   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 10                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 10                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 11                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 3m 57s 910ms.
+
+
+PREDICTION RESULTS (Selected by 'scrollPercentage_scaled', total samples: 103265, window_in_days: 1)
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 143               ┆ 0.14 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.14 %       │
+│ Hypothesis 4   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 5   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 6   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 7   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 8   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 9   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 10  ┆ 1098              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 3m 55s 665ms.
+
+WEIGHTED EXPERIMENTS
+
+PREDICTION RESULTS (Total samples: 103265, window_in_days: 1)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 143               ┆ 0.14 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.14 %       │
+│ Hypothesis 4   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 5   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 6   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 7   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 8   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 9   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 10  ┆ 1098              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 4m 12s 995ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_days: 1)
+Weights -> views: 1 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 6                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 4   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 5   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 6   ┆ 11                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 12                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 12                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 14                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 14                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 4m 9s 776ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_days: 1)
+Weights -> views: 1 engagement: 1 timeOnPage_per_char: 1 scrollPercentage: 2
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 6                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 4   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 5   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 6   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 8                 ┆ 0.01 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 4m 6s 948ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_days: 2)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 143               ┆ 0.14 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.14 %       │
+│ Hypothesis 4   ┆ 143               ┆ 0.14 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.14 %       │
+│ Hypothesis 5   ┆ 143               ┆ 0.14 %         ┆ 0.13 %         ┆ 0.13 %          ┆ 0.14 %       │
+│ Hypothesis 6   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 7   ┆ 144               ┆ 0.14 %         ┆ 0.14 %         ┆ 0.14 %          ┆ 0.14 %       │
+│ Hypothesis 8   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 9   ┆ 1096              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+│ Hypothesis 10  ┆ 1097              ┆ 1.06 %         ┆ 1.06 %         ┆ 1.06 %          ┆ 1.06 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 5m 59s 809ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_days: 2)
+Weights -> views: 1 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 0
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 4                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 5                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 5                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 8                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 10                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 10                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 13                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 14                ┆ 0.01 %         ┆ 0.01 %         ┆ 0.01 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 6m 15s 97ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 12)
+Weights -> views: 1 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 0
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 1                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 7   ┆ 3                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 8   ┆ 3                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 9   ┆ 3                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 10  ┆ 3                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 56s 572ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 1)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 0                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 1                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 7   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 8   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 9   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 10  ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 2s 671ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 2)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 1                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 7   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 8   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 9   ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 10  ┆ 3                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 6s 129ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 3)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.93 %          ┆ 0.01 %       │
+│ Hypothesis 7   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.93 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.93 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.93 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.93 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 10s 354ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 4)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 1                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 1                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.91 %          ┆ 0.00 %       │
+│ Hypothesis 3   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 1.02 %          ┆ 0.00 %       │
+│ Hypothesis 4   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 1.02 %          ┆ 0.00 %       │
+│ Hypothesis 5   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.00 %       │
+│ Hypothesis 6   ┆ 5                 ┆ 0.00 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.00 %       │
+│ Hypothesis 7   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.01 %       │
+│ Hypothesis 8   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.01 %       │
+│ Hypothesis 9   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.01 %       │
+│ Hypothesis 10  ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 1.12 %          ┆ 0.01 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 13s 74ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 6)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 2                 ┆ 0.00 %         ┆ 0.00 %         ┆ 0.00 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.14 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 10                ┆ 0.01 %         ┆ 0.02 %         ┆ 1.16 %          ┆ 0.01 %       │
+│ Hypothesis 4   ┆ 11                ┆ 0.01 %         ┆ 0.02 %         ┆ 1.26 %          ┆ 0.01 %       │
+│ Hypothesis 5   ┆ 39                ┆ 0.04 %         ┆ 0.07 %         ┆ 2.18 %          ┆ 0.04 %       │
+│ Hypothesis 6   ┆ 39                ┆ 0.04 %         ┆ 0.07 %         ┆ 2.18 %          ┆ 0.04 %       │
+│ Hypothesis 7   ┆ 39                ┆ 0.04 %         ┆ 0.07 %         ┆ 2.18 %          ┆ 0.04 %       │
+│ Hypothesis 8   ┆ 40                ┆ 0.04 %         ┆ 0.07 %         ┆ 2.18 %          ┆ 0.04 %       │
+│ Hypothesis 9   ┆ 41                ┆ 0.04 %         ┆ 0.08 %         ┆ 2.21 %          ┆ 0.04 %       │
+│ Hypothesis 10  ┆ 41                ┆ 0.04 %         ┆ 0.08 %         ┆ 2.21 %          ┆ 0.04 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 20s 451ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 8)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 6                 ┆ 0.01 %         ┆ 0.01 %         ┆ 0.91 %          ┆ 0.01 %       │
+│ Hypothesis 2   ┆ 10                ┆ 0.01 %         ┆ 0.02 %         ┆ 1.04 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 20                ┆ 0.02 %         ┆ 0.04 %         ┆ 1.26 %          ┆ 0.02 %       │
+│ Hypothesis 4   ┆ 22                ┆ 0.02 %         ┆ 0.04 %         ┆ 1.26 %          ┆ 0.02 %       │
+│ Hypothesis 5   ┆ 95                ┆ 0.09 %         ┆ 0.17 %         ┆ 2.18 %          ┆ 0.09 %       │
+│ Hypothesis 6   ┆ 97                ┆ 0.09 %         ┆ 0.18 %         ┆ 2.18 %          ┆ 0.09 %       │
+│ Hypothesis 7   ┆ 97                ┆ 0.09 %         ┆ 0.18 %         ┆ 2.18 %          ┆ 0.09 %       │
+│ Hypothesis 8   ┆ 97                ┆ 0.09 %         ┆ 0.18 %         ┆ 2.18 %          ┆ 0.09 %       │
+│ Hypothesis 9   ┆ 97                ┆ 0.09 %         ┆ 0.18 %         ┆ 2.18 %          ┆ 0.09 %       │
+│ Hypothesis 10  ┆ 98                ┆ 0.09 %         ┆ 0.18 %         ┆ 2.18 %          ┆ 0.09 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 29s 928ms.
+
+PREDICTION RESULTS (Total samples: 103265, window_in_hours: 12)
+Weights -> views: 0 engagement: 0 timeOnPage_per_char: 0 scrollPercentage: 1
+shape: (10, 6)
+┌────────────────┬───────────────────┬────────────────┬────────────────┬─────────────────┬──────────────┐
+│ Criteria (str) ┆ Match Count (i64) ┆ Accuracy (str) ┆ F1 Score (str) ┆ Precision (str) ┆ Recall (str) │
+╞════════════════╪═══════════════════╪════════════════╪════════════════╪═════════════════╪══════════════╡
+│ Hypothesis 1   ┆ 4                 ┆ 0.00 %         ┆ 0.01 %         ┆ 0.03 %          ┆ 0.00 %       │
+│ Hypothesis 2   ┆ 15                ┆ 0.01 %         ┆ 0.02 %         ┆ 0.17 %          ┆ 0.01 %       │
+│ Hypothesis 3   ┆ 21                ┆ 0.02 %         ┆ 0.04 %         ┆ 1.19 %          ┆ 0.02 %       │
+│ Hypothesis 4   ┆ 22                ┆ 0.02 %         ┆ 0.04 %         ┆ 1.19 %          ┆ 0.02 %       │
+│ Hypothesis 5   ┆ 164               ┆ 0.16 %         ┆ 0.28 %         ┆ 2.29 %          ┆ 0.16 %       │
+│ Hypothesis 6   ┆ 165               ┆ 0.16 %         ┆ 0.28 %         ┆ 2.32 %          ┆ 0.16 %       │
+│ Hypothesis 7   ┆ 166               ┆ 0.16 %         ┆ 0.28 %         ┆ 2.32 %          ┆ 0.16 %       │
+│ Hypothesis 8   ┆ 168               ┆ 0.16 %         ┆ 0.29 %         ┆ 2.33 %          ┆ 0.16 %       │
+│ Hypothesis 9   ┆ 170               ┆ 0.16 %         ┆ 0.29 %         ┆ 2.33 %          ┆ 0.16 %       │
+│ Hypothesis 10  ┆ 172               ┆ 0.17 %         ┆ 0.29 %         ┆ 2.38 %          ┆ 0.17 %       │
+└────────────────┴───────────────────┴────────────────┴────────────────┴─────────────────┴──────────────┘
+<=== [news_reccomendation_system.NewsRecommenderSystem.run] Elapsed: 1m 56s 602ms.
+

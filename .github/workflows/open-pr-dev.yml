@@ -1,0 +1,52 @@
+name: 'Validate & Open PR to DEV'
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  terraform:
+    name: 'Validate & Open PR to DEV'
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: us-east-1
+      APPLICATON_NAME: fiap-ml-models-monorepo
+      OUTPUT_DIR: output
+      MODELS_BUCKET_NAME: fiap-ml-models-monorepo-bucket
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./infra
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Echo Python/AWS CLI Versions
+        run: | 
+          python --version
+          aws --version
+
+      - name: Echo App Contents
+        run: tree ../app
+
+      - name: Terraform Init
+        run: terraform init -backend-config="key=$APPLICATON_NAME-develop.tfstate"
+
+      - name: Terraform Plan
+        run: terraform plan -var 'environment=develop' -var "output_dir=$OUTPUT_DIR" -var "bucket_name=$MODELS_BUCKET_NAME" -input=false
+
+      - name: Create Pull Request to Develop
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: develop
