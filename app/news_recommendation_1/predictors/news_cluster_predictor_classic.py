@@ -48,10 +48,6 @@ class NewsClusterClassicPredictor:
         # data_test = user_data_test.select([cs.starts_with("cluster_"), "target_cluster"]).to_pandas().dropna()
         data_test = user_data_test.select([cs.starts_with("cluster_"), "target_cluster"]).to_pandas()
 
-        # # print rows of data_test with NaN values
-        # print("NUUUUUL")
-        # print(data_test[data_test.isnull().any(axis=1)])
-
         X_test = data_test.iloc[:, :-1]
         y_test = data_test.iloc[:, -1] # Contains NaN
 
